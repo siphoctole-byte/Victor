@@ -1,21 +1,43 @@
+from tools.apps import AppTools
+from ai.ollama_provider import OllamaProvider
+from tools.system_tools import SystemTools
+
+
 class Assistant:
     def __init__(self):
-        self.name = "Victor"
-        self.version = "0.2"
+        self.ai = OllamaProvider()
 
     def reply(self, message):
-        message = message.strip().lower()
+        text = message.lower()
 
-        if message == "":
-            return "Please type a message."
+        # -----------------------------
+        # Time and Date
+        # -----------------------------
+        if "time" in text and "date" in text:
+            return (
+                f"Today is {SystemTools.current_date()}.\n"
+                f"The current time is {SystemTools.current_time()}."
+            )
 
-        if "hello" in message:
-            return "Hello Sipho! I'm Victor. It's great to see you."
+        if "time" in text:
+            return f"The current time is {SystemTools.current_time()}."
 
-        if "how are you" in message:
-            return "I'm operating perfectly and ready to help."
+        if "date" in text or "today" in text:
+            return f"Today is {SystemTools.current_date()}."
 
-        if "who are you" in message:
-            return "I'm Victor, your AI desktop assistant."
+        if "year" in text:
+            return f"The current year is {SystemTools.current_year()}."
 
-        return "I understand your message, but I haven't learned how to answer that yet."
+        # -----------------------------
+        # Open Applications
+        # -----------------------------
+        if "open notepad" in text:
+            return AppTools.open_notepad()
+
+        if "open calculator" in text:
+            return AppTools.open_calculator()
+
+        # -----------------------------
+        # AI Response
+        # -----------------------------
+        return self.ai.ask(message)
