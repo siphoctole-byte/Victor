@@ -1,0 +1,6 @@
+print("===================================")
+print("        VICTOR AI ASSISTANT")
+print("===================================")
+print("Victor is online.")
+print("Version: 0.1")
+print("Status: Ready")
